@@ -1,5 +1,34 @@
 <!DOCTYPE html>
 <html>
-<head></head>
-<body></body>
+<head>
+    <meta charset="utf-8">
+    <script>
+        function get(id) {
+            return document.getElementById(id);
+        }
+        var api = 'https://api.dc01.gamelockerapp.com/shards/';
+        var key = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJiMjIzMWRiMC02M2VjLTAxMzYtMDc0My0wYTU4NjQ2MGI5MjkiLCJpc3MiOiJnYW1lbG9ja2VyIiwiaWF0IjoxNTMwOTUxNjk5LCJwdWIiOiJzZW1jIiwidGl0bGUiOiJ2YWluZ2xvcnkiLCJhcHAiOiJ2Z3F1ZXJ5Iiwic2NvcGUiOiJjb21tdW5pdHkiLCJsaW1pdCI6MTB9.I2y8hWOA_IKT8VGCeN2qEoJYT8wuSTDzDy1esjIBuBQ';
+        function query() {
+            var rgn = get('rgn').value;
+            var name = get('name').value;
+            var req = new XMLHttpRequest();
+            req.onreadystatechange = function() {
+                if (req.readyState == 4) {
+                    get('data').innerHTML = JSON.stringify(JSON.parse(req.responseText), null, 2);
+                }
+            }
+            req.open('GET', api + rgn + '/players?filter[playerNames]=' + name);
+            req.setRequestHeader('Accept', 'application/vnd.api+json');
+            req.setRequestHeader('Authorization', key);
+            req.send(null);
+        }
+    </script>
+</head>
+<body>
+    <input id="rgn" type="text" style="ime-mode: disabled" />
+    <input id="name" type="text" style="ime-mode: disabled" />
+    <input type="button" onclick="query()" value="Search">
+    <br />
+    <pre id="data"></pre>
+</body>
 </html>
