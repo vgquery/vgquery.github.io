@@ -1,8 +1,8 @@
 function get(id) {
     return document.getElementById(id);
 }
-document.onkeydown = function (ev) {
-    ev = ev || window.event;
+document.addEventListener('keydown', keydown);
+function keydown(ev) {
     if (ev.keyCode == 13) {
         query();
     }
